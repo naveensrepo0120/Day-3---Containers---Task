@@ -1,0 +1,31 @@
+brainkiller@Naveenbalaji:~/docktest$ vi Dockerfile
+
+brainkiller@Naveenbalaji:~/docktest$ ls
+Dockerfile  index.html
+
+brainkiller@Naveenbalaji:~/docktest$ vi index.html
+
+brainkiller@Naveenbalaji:~/docktest$ docker build -t aboutme:v1.1 .
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon  3.072kB
+Step 1/3 : FROM nginx:alpine
+ ---> f4215f6ee683
+Step 2/3 : COPY index.html /usr/share/nginx/html
+ ---> 9e10bc63434b
+Step 3/3 : CMD ["nginx", "-g", "daemon off;"]
+ ---> Running in 99bc74ff2e03
+Removing intermediate container 99bc74ff2e03
+ ---> 1ecc115f225a
+Successfully built 1ecc115f225a
+Successfully tagged aboutme:v1.1
+
+brainkiller@Naveenbalaji:~/docktest$ docker run -d -p 3010:80 --name aboutmecontainer aboutme:v1.1
+ec94d204bfe15f4ed9add677c94ca05ce2f0265b7c6d80fd0cd1b98593c3b669
+
+brainkiller@Naveenbalaji:~/docktest$ docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS         PORTS
+       NAMES
+ec94d204bfe1   aboutme:v1.1   "/docker-entrypoint.…"   15 seconds ago   Up 8 seconds   0.0.0.0:3010->80/tcp, :::3010->80
